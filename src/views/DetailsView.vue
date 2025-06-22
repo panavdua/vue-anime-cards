@@ -14,16 +14,6 @@ const refresh = async () => {
   router.replace(`/details/${store.anime.content.id}`);
 };
 
-// const routeId = computed(() => route.params.id);
-// const anime = computed(() => store.anime?.content);
-
-// onMounted(() => {
-//   console.log(anime, 'anime in detailsview')
-//   console.log(routeId, 'routeId in detailsview')
-//   if (!anime || String(anime.id) !== String(routeId.value)) {
-//     router.replace('/');
-//   }
-// });
 </script>
 
 <template>
