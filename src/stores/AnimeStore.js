@@ -7,12 +7,11 @@ export const useAnimeStore = defineStore('anime', () => {
   const loading = ref(false);
   const error = ref(null);
 
+  // To handle functionality for making sure user can only enter Details page through clicking on image in HomeView
   const navigatedFromClick = ref(false);
-
   const markAsNavigated = () => {
     navigatedFromClick.value = true;
   };
-
   const resetNavigationFlag = () => {
     navigatedFromClick.value = false;
   };

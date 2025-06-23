@@ -1,11 +1,9 @@
 <script setup>
 import { onMounted } from 'vue';
 import Card from '@/components/Card.vue';
-import { useRouter } from 'vue-router';
 import { useAnimeStore } from '@/stores/AnimeStore.js'
 import Header from '@/components/Header.vue'
 
-const router = useRouter();
 const store = useAnimeStore();
 
 onMounted(() => {

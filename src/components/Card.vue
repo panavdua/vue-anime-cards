@@ -17,25 +17,20 @@ defineProps({
 })
 
 defineEmits(['refresh'])
-
 </script>
 
 <template>
 
   <div class="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-100 p-4">
     <div class="max-w-md w-full bg-white rounded-xl shadow-lg overflow-hidden transition-all">
-      <RouterLink :to="`/details/${anime.id}`" @click="store.markAsNavigated">
-          <img :src="anime.thumbNailImage" @error="handleImgError" loading="lazy" alt="Anime" class="w-full h-80 object-cover rounded-t-lg" />
+      <RouterLink :to="`/details/${anime.id}`" @click="store.markAsNavigated"> <!-- only users who click on image can enter details page-->
+          <img :src="anime.thumbNailImage" @error="handleImgError" loading="lazy" alt="Anime" 
+            class="w-full h-80 object-cover rounded-t-lg" />
       </RouterLink>
       
       <AnimeInfo :anime="anime" @refresh="$emit('refresh')" />
     </div>
   </div>
 
-  <!-- <div class="bg-white rounded-xl shadow p-4 " >
-    
-    
-    
-  </div> -->
 </template>
 

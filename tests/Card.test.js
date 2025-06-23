@@ -20,7 +20,7 @@ const mockAnime = {
 describe('Card.vue', () => {
 
    beforeEach(() => {
-    // ✅ Setup pinia for test
+    // Setup pinia for test
     setActivePinia(createPinia())
   })
 

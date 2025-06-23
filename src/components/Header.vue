@@ -1,9 +1,10 @@
 
 <script setup>
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
 import { useAnimeStore } from '@/stores/AnimeStore.js'
 
 const today = new Date();
+
 
 const formattedDate = computed(() => {
   const options = { weekday: 'long', day: 'numeric', month: 'long' };
@@ -23,7 +24,7 @@ const userName = computed(() => store.anime?.content?.userName || 'Guest');
     </div>
     <div>
       <button class="w-30 h-8 flex items-center justify-center rounded-full bg-gray-200 text-sm font-semibold">
-        {{userName}}
+        {{ userName }}
       </button>
     </div>
   </div>

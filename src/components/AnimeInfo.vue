@@ -1,6 +1,12 @@
+/*
+  This component contains the logo, title + subtitle and the refresh button.
+  This component is used in Card as well as Details
+*/
+
 <script setup>
 import { defineProps, defineEmits } from 'vue';
 
+// In case error loading image, use defaultLogo as fallback
 const defaultLogo = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
 const handleImgError = (e) => {
   e.target.src = defaultLogo
@@ -17,7 +23,7 @@ defineEmits(['refresh']);
 </script>
 
 <template>
-  <div class="px-4 py-2"> <!-- ✅ NEW wrapper with padding -->
+  <div class="px-4 py-2"> <!-- NEW wrapper with padding -->
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <img

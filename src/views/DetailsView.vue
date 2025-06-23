@@ -1,13 +1,12 @@
 <script setup>
 import { useAnimeStore } from '@/stores/AnimeStore.js'
-import { useRouter, useRoute } from 'vue-router';
-import { onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { onMounted } from 'vue';
 import Details from '@/components/Details.vue'
 
 
 const store = useAnimeStore();
 const router = useRouter();
-const route = useRoute();
 
 const refresh = async () => {
   await store.loadAnime();

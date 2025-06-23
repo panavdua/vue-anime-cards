@@ -15,6 +15,7 @@ const props = defineProps({
 
 const showToast = ref(false);
 
+// Inject the mainImage from anime content after the 2nd paragraph to ensure page looks like a story
 function injectImageAfterNthParagraph(html, imageTag, index = 2) {
   const parts = html.split('</p>');
   if (parts.length > index) {
@@ -32,7 +33,8 @@ const safeHtml = computed(() => {
   }
 
   const rawHtml = props.anime.text;
-  const imageTag = `<img src="${props.anime.mainImage || defaultImg}" class="w-full max-h-[400px] object-cover rounded-md shadow transition duration-300 my-4" />`;
+  const imageTag = `<img src="${props.anime.mainImage || defaultImg}" 
+    class="w-full max-h-[400px] object-cover rounded-md shadow transition duration-300 my-4" />`;
 
   // Try to inject image; if that fails, fallback to rawHtml
   let injectedHtml;
@@ -65,13 +67,16 @@ const handleImgError = (e) => {
 
 <template>
   <div class="w-full max-w-lg md:max-w-xl mx-auto p-4">
-    <!-- All your existing content inside -->
      <div class="p-4 relative">
     <!-- Back button -->
-      <RouterLink to="/" class="fixed top-4 right-4 z-50 bg-gray-200 text-gray-800 rounded-full w-10 h-10 flex items-center justify-center text-xl shadow hover:bg-gray-300 transition">Χ</RouterLink>
+      <RouterLink to="/" class="fixed top-4 right-4 z-50 bg-gray-200 text-gray-800 rounded-full w-10 h-10 
+        flex items-center justify-center text-xl shadow hover:bg-gray-300 transition">
+        Χ
+      </RouterLink>
 
       <!-- Main thumbnail image -->
-      <img :src="anime.thumbNailImage" @error="handleImgError" loading="lazy" class="w-full max-h-[350px] object-cover rounded shadow" />
+      <img :src="anime.thumbNailImage" @error="handleImgError" loading="lazy" 
+        class="w-full max-h-[350px] object-cover rounded shadow" />
 
       
       <!-- Title + subtitle + refresh -->
@@ -109,7 +114,8 @@ const handleImgError = (e) => {
       <!-- Share button -->
       <button
           @click="handleShare"
-          class="mt-6 cursor-pointer flex items-center gap-2 mx-auto text-blue-500 bg-gray-100 px-4 py-2 rounded hover:bg-gray-200 transition"
+          class="mt-6 cursor-pointer flex items-center gap-2 mx-auto text-blue-500 bg-gray-100 px-4 py-2 
+            rounded hover:bg-gray-200 transition"
           >
           <!-- Inline Share Icon -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -121,7 +127,8 @@ const handleImgError = (e) => {
 
       <div
           v-if="showToast"
-          class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 transition-opacity"
+          class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded 
+            shadow-lg z-50 transition-opacity"
           >
           Story copied to clipboard!
       </div>
