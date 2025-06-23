@@ -46,7 +46,7 @@ describe('AnimeStore', () => {
     await store.loadAnime()
 
     expect(store.anime).toBe(null)
-    expect(store.error).toBe('Failed to load anime')
+    expect(store.error).toBe('Network error')
     expect(store.loading).toBe(false)
   })
 

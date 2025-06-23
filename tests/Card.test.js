@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
+import { createPinia, setActivePinia } from 'pinia'
 import Card from '@/components/Card.vue'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 const router = createRouter({
@@ -17,6 +18,12 @@ const mockAnime = {
 }
 
 describe('Card.vue', () => {
+
+   beforeEach(() => {
+    // ✅ Setup pinia for test
+    setActivePinia(createPinia())
+  })
+
   it('renders image and passes anime to AnimeInfo', async () => {
     const wrapper = mount(Card, {
       props: { anime: mockAnime },

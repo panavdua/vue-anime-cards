@@ -12,6 +12,12 @@ const route = useRoute();
 const refresh = async () => {
   await store.loadAnime();
   router.replace(`/details/${store.anime.content.id}`);
+
+onMounted(() => {
+  if (!store.anime) {
+    router.replace('/');
+  }
+});
 };
 
 </script>

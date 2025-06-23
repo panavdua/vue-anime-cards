@@ -1,6 +1,11 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
 
+const defaultLogo = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+const handleImgError = (e) => {
+  e.target.src = defaultLogo
+}
+
 defineProps({
   anime: {
     type: Object,
@@ -16,15 +21,16 @@ defineEmits(['refresh']);
     <div class="flex items-center justify-between">
       <!-- Logo -->
       <img
-        :src="anime.logo || 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'"
+        :src="anime.logo || defaultLogo"
+        @error="handleImgError"
         alt="Logo"
         class="w-10 h-10 rounded-xl object-cover"
       />
 
       <!-- Title and Subtitle -->
       <div class="flex-1 px-4">
-        <h2 class="text-base font-semibold leading-tight">{{ anime.title }}</h2>
-        <p class="text-sm text-gray-500 truncate">{{ anime.subTitle }}</p>
+        <h2 class="text-base font-semibold leading-tight">{{ anime.title || 'No title available'}}</h2>
+        <p class="text-sm text-gray-500 truncate">{{ anime.subTitle || 'No subtitle available'}}</p>
       </div>
 
       <!-- Refresh Button -->

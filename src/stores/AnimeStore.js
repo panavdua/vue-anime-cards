@@ -7,18 +7,36 @@ export const useAnimeStore = defineStore('anime', () => {
   const loading = ref(false);
   const error = ref(null);
 
-  const loadAnime = async () => {
-    loading.value = true;
-    error.value = null;
-    try {
-      anime.value = await fetchAnime();
-    } catch (err) {
-      error.value = 'Failed to load anime';
-      console.error(err);
-    } finally {
-      loading.value = false;
-    }
+  const navigatedFromClick = ref(false);
+
+  const markAsNavigated = () => {
+    navigatedFromClick.value = true;
   };
 
-  return { anime, loading, error, loadAnime };
+  const resetNavigationFlag = () => {
+    navigatedFromClick.value = false;
+  };
+
+  const loadAnime = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await fetchAnime()
+      if (!response?.content || typeof response.content !== 'object') {
+        throw new Error('Invalid API response')
+      }
+      if (!response.content.title) {
+        throw new Error('Invalid anime content')
+      }
+      anime.value = response
+    } catch (err) {
+      error.value = err.message || 'Failed to load anime'
+      console.error('Store Error:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+
+  return { anime, loading, error, loadAnime, navigatedFromClick, markAsNavigated, resetNavigationFlag };
 });

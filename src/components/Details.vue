@@ -23,10 +23,26 @@ function injectImageAfterNthParagraph(html, imageTag, index = 2) {
   return parts.join('</p>');
 }
 
+const defaultImg = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg';
+
 const safeHtml = computed(() => {
-  const rawHtml = props.anime.text || '';
-  const imageTag = `<img src="${props.anime.mainImage}" class="w-full max-h-[400px] object-cover rounded-md shadow transition duration-300" />`;
-  const injectedHtml = injectImageAfterNthParagraph(rawHtml, imageTag, 2);
+  // Fallback to a basic message if there's no text
+  if (!props.anime || !props.anime.text) {
+    return '<p class="text-gray-400">No story content available.</p>';
+  }
+
+  const rawHtml = props.anime.text;
+  const imageTag = `<img src="${props.anime.mainImage || defaultImg}" class="w-full max-h-[400px] object-cover rounded-md shadow transition duration-300 my-4" />`;
+
+  // Try to inject image; if that fails, fallback to rawHtml
+  let injectedHtml;
+  try {
+    injectedHtml = injectImageAfterNthParagraph(rawHtml, imageTag, 2);
+  } catch (e) {
+    injectedHtml = rawHtml;
+  }
+
+  // Sanitize before returning
   return DOMPurify.sanitize(injectedHtml);
 });
 
@@ -41,6 +57,10 @@ const handleShare = () => {
     });
 };
 
+const handleImgError = (e) => {
+  e.target.src = defaultImg;
+}
+
 </script>
 
 <template>
@@ -51,7 +71,7 @@ const handleShare = () => {
       <RouterLink to="/" class="fixed top-4 right-4 z-50 bg-gray-200 text-gray-800 rounded-full w-10 h-10 flex items-center justify-center text-xl shadow hover:bg-gray-300 transition">Χ</RouterLink>
 
       <!-- Main thumbnail image -->
-      <img :src="anime.thumbNailImage" loading="lazy" class="w-full max-h-[350px] object-cover rounded shadow" />
+      <img :src="anime.thumbNailImage" @error="handleImgError" loading="lazy" class="w-full max-h-[350px] object-cover rounded shadow" />
 
       
       <!-- Title + subtitle + refresh -->
@@ -70,8 +90,8 @@ const handleShare = () => {
           />
 
           <!-- Title & Subtitle -->
-          <h2 class="text-lg font-semibold">{{ anime.title }}</h2>
-          <p class="text-sm text-gray-500 mb-4">{{ anime.subTitle }}</p> <!-- Added spacing here -->
+          <h2 class="text-lg font-semibold">{{ anime.title || 'No title available' }}</h2>
+          <p class="text-sm text-gray-500 mb-4">{{ anime.subTitle || 'No subtitle available'}}</p> <!-- Added spacing here -->
 
           <!-- Refresh Button -->
           <button

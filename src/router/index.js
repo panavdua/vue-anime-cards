@@ -15,6 +15,11 @@ const router = createRouter({
       name: 'details',
       component: DetailsView
     },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
+    }
+
   ],
 })
 

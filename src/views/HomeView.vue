@@ -19,27 +19,29 @@ console.log(store.anime)
 
 <template>
   <Header/>  
-  <!-- <div class="p-4">
-    <Card
-      v-if="store.anime"
-      :anime="store.anime.content"
-      @refresh="store.loadAnime"
-    />
-    <p v-if="store.loading" class="mt-4 text-center text-gray-500">Loading...</p>
-    <p v-if="store.error" class="mt-4 text-center text-red-500">{{ store.error }}</p>
-  </div> -->
+
 
   <div class="min-h-screen bg-gradient-to-b from-white to-gray-100 px-4 flex justify-center">
     <div class="w-full max-w-xl">
       <!-- Card with margin from top -->
       <div >
+
+          <div v-if="store.loading && !store.anime" class="flex justify-center my-8">
+            <div class="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-gray-600"></div>
+          </div>
+        
+
+        <!-- Show card when anime is ready -->
         <Card
           v-if="store.anime"
           :anime="store.anime.content"
           @refresh="store.loadAnime"
         />
-        <p v-if="store.loading" class="mt-1 text-center text-gray-500">Loading...</p>
-        <p v-if="store.error" class="mt-4 text-center text-red-500">{{ store.error }}</p>
+
+        <!-- Error after card or if it fails -->
+        <p v-if="store.error" class="mt-4 text-center font-medium text-red-500">
+          Failed to load anime 
+        </p>
       </div>
     </div>
   </div>
